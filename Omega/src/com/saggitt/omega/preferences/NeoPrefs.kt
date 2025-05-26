@@ -109,7 +109,6 @@ class NeoPrefs private constructor(val context: Context) {
     val reloadGrid = { onChangeCallback?.reloadGrid() }
     val reloadAll = { reloadModel(); reloadGrid() }
     val reloadTabs = { onChangeCallback?.reloadTabs() }
-    val reloadTransparentIcon = { onChangeCallback?.reloadTransparentIcon() }
 
     inline fun withChangeCallback(
         crossinline callback: (PreferencesChangeCallback) -> Unit,

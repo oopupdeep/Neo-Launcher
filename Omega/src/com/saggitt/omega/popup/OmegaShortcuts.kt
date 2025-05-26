@@ -101,6 +101,19 @@ class OmegaShortcuts {
         }
     }
 
+//    class Encrypt(
+//        private val launcher: NeoLauncher,
+//        private val appInfo: ModelAppInfo,
+//        itemInfo: ItemInfo,
+//        originalView: View,
+//    ) : SystemShortcut<NeoLauncher>(
+//        R.drawable.ic_edit_no_shadow,
+//        R.string.action_preferences, launcher, itemInfo,
+//        originalView
+//    ) {
+//
+//    }
+
     class AppRemove(
         private val launcher: NeoLauncher,
         itemInfo: ItemInfo,
@@ -167,6 +180,10 @@ class OmegaShortcuts {
     }
 
     companion object {
+//        val ENCRYPT = SystemShortcut.Factory<NeoLauncher> {
+//
+//        }
+
         val CUSTOMIZE = SystemShortcut.Factory<NeoLauncher> { activity, itemInfo, originalView ->
             val prefs = NeoPrefs.getInstance()
             var customize: Customize? = null

@@ -175,6 +175,7 @@
     <string name="app_reset">Reset Selection</string>
     <string name="protected_app_reset">Reset protected apps</string>
     <string name="action_preferences" translatable="false">@string/customize</string>
+    <string name="encrypt_app">Encrypt</string>
     <string name="needs_usage_access">Usage access needed</string>
     <string name="msg_missing_usage_access">Turn on usage access for <xliff:g example="My App" id="name">%1$s</xliff:g> to show app suggestions</string>
     <string name="trust_apps_no_lock_error">Please set up a secure lock screen to restrict app access</string>

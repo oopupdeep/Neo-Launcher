@@ -42,10 +42,6 @@ class PreferencesChangeCallback(val launcher: NeoLauncher) {
         }
     }
 
-    fun reloadTransparentIcon() {
-
-    }
-
     fun scheduleRecreate() {
         MAIN_EXECUTOR.execute {
             launcher.scheduleRecreate()
