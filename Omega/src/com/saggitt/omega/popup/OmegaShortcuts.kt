@@ -43,6 +43,7 @@ import com.android.launcher3.popup.SystemShortcut
 import com.android.launcher3.util.ComponentKey
 import com.saggitt.omega.NeoLauncher
 import com.saggitt.omega.compose.components.ComposeBottomSheet
+import com.saggitt.omega.encrypt.SetOrChangeAppPinPage
 import com.saggitt.omega.icons.CustomizeIconPage
 import com.saggitt.omega.preferences.NeoPrefs
 import com.saggitt.omega.util.hasFlag
@@ -101,7 +102,7 @@ class OmegaShortcuts {
         }
     }
 
-    class Encrypt(
+    class AppLock(
         private val launcher: NeoLauncher,
         private val appInfo: ModelAppInfo,
         itemInfo: ItemInfo,
@@ -115,9 +116,7 @@ class OmegaShortcuts {
         private val prefs: NeoPrefs = NeoPrefs.getInstance()
 
         override fun onClick(v: View?) {
-            val context = launcher
             val componentKey = appInfo.toComponentKey()
-            val defaultTitle = appInfo.title.toString()
 
             if (launcher.isInState(LauncherState.ALL_APPS)) {
                 if (prefs.drawerPopupEdit) {
@@ -210,9 +209,6 @@ class OmegaShortcuts {
     }
 
     companion object {
-//        val ENCRYPT = SystemShortcut.Factory<NeoLauncher> {
-//
-//        }
 
         val CUSTOMIZE = SystemShortcut.Factory<NeoLauncher> { activity, itemInfo, originalView ->
             val prefs = NeoPrefs.getInstance()
@@ -231,6 +227,25 @@ class OmegaShortcuts {
                 }
             }
             customize
+        }
+
+        val APP_LOCK = SystemShortcut.Factory<NeoLauncher> { activity, itemInfo, originalView ->
+            val prefs = NeoPrefs.getInstance()
+            var appLock: AppLock? = null
+            if (Launcher.getLauncher(activity).isInState(LauncherState.NORMAL)) {
+                if (prefs.desktopPopupEdit && !prefs.desktopLock.getValue()) {
+                    getAppInfo(activity, itemInfo)?.let {
+                        appLock = AppLock(activity, it, itemInfo, originalView)
+                    }
+                }
+            } else {
+                if (prefs.drawerPopupEdit) {
+                    getAppInfo(activity, itemInfo)?.let {
+                        appLock = AppLock(activity, it, itemInfo, originalView)
+                    }
+                }
+            }
+            appLock
         }
 
         private fun getAppInfo(launcher: NeoLauncher, itemInfo: ItemInfo): ModelAppInfo? {
