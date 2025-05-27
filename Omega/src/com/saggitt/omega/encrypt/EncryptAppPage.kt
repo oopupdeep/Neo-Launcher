@@ -6,7 +6,7 @@ import com.android.launcher3.util.ComponentKey
 import com.saggitt.omega.preferences.NeoPrefs
 
 @Composable
-fun CustomizeIconPage(
+fun EncryptAppPage(
     defaultTitle: String,
     componentKey: ComponentKey,
     appInfo: AppInfo,

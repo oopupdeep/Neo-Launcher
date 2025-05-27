@@ -101,18 +101,48 @@ class OmegaShortcuts {
         }
     }
 
-//    class Encrypt(
-//        private val launcher: NeoLauncher,
-//        private val appInfo: ModelAppInfo,
-//        itemInfo: ItemInfo,
-//        originalView: View,
-//    ) : SystemShortcut<NeoLauncher>(
-//        R.drawable.ic_edit_no_shadow,
-//        R.string.action_preferences, launcher, itemInfo,
-//        originalView
-//    ) {
-//
-//    }
+    class Encrypt(
+        private val launcher: NeoLauncher,
+        private val appInfo: ModelAppInfo,
+        itemInfo: ItemInfo,
+        originalView: View,
+    ) : SystemShortcut<NeoLauncher>(
+        R.drawable.ic_lock, // 你可以自定义图标
+        R.string.app_lock, // 记得在 strings.xml 里加上此资源
+        launcher, itemInfo, originalView
+    ) {
+
+        private val prefs: NeoPrefs = NeoPrefs.getInstance()
+
+        override fun onClick(v: View?) {
+            val context = launcher
+            val componentKey = appInfo.toComponentKey()
+            val defaultTitle = appInfo.title.toString()
+
+            if (launcher.isInState(LauncherState.ALL_APPS)) {
+                if (prefs.drawerPopupEdit) {
+                    AbstractFloatingView.closeAllOpenViews(mTarget)
+                    ComposeBottomSheet.show(launcher) {
+                        SetOrChangeAppPinPage(
+                            componentKey = componentKey,
+                            onClose = { close(true) }
+                        )
+                    }
+                }
+            } else {
+                if (prefs.desktopPopupEdit && !prefs.desktopLock.getValue()) {
+                    AbstractFloatingView.closeAllOpenViews(mTarget)
+                    ComposeBottomSheet.show(launcher) {
+                        SetOrChangeAppPinPage(
+                            componentKey = componentKey,
+                            onClose = { close(true) }
+                        )
+                    }
+                }
+            }
+        }
+    }
+
 
     class AppRemove(
         private val launcher: NeoLauncher,
